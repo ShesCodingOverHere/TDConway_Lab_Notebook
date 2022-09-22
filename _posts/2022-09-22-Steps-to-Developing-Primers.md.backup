@@ -1,0 +1,94 @@
+Potential Ys
+
+plotted the 4 potential Ys against the female to see where they land using R
+Script:C:/Users/tdcon/Desktop/KUResearch/PutativeYtoX.R
+
+These are the potentials
+# PGA_scaffold11__133_contigs__length_7237977 
+# PGA_scaffold33__196_contigs__length_9964445
+# PGA_scaffold31__9_contigs__length_634783
+# Consensus_Consensus_Consensus_disjointig_37_pilon_pilon_pilon_pilon_pilon__unscaffolded
+
+
+bioawk -c fastx '$name=="PGA_scaffold11__133_contigs__length_7237977" {print substr($seq,1000000,10000)}' /home/runcklesslab/Taylor/Short_Read_Mapping/Daffinis_Male_HiC.20221222.fa
+
+
+bioawk -c fastx '$name=="PGA_scaffold11__133_contigs__length_7237977" {print ">sc11.1000000" substr($seq,1000000,10000)}' /home/runcklesslab/Taylor/Short_Read_Mapping/Daffinis_Male_HiC.20221222.fa >MaleScaff11.1000000to1010000.fa
+
+
+bioawk -c fastx '$name=="PGA_scaffold11__133_contigs__length_7237977" {print ">sc11.1000000\n" substr($seq,1000000,10000)}' /home/runcklesslab/Taylor/Short_Read_Mapping/Daffinis_Male_HiC.20221222.fa >MaleScaff11.1000000to1010000.fa
+
+
+makeblastdb -in /home/runcklesslab/Taylor/Short_Read_Mapping/Daffinis_Female_HiC.20220721.fa -out FemaleHiC -title FemaleHiC -dbtype nucl
+
+
+blastn -query MaleScaff11.1000000to1010000.fa -db FemaleHiC -outfmt 6
+
+
+blastn -query MaleScaff11.1000000to1010000.fa -db FemaleHiC -outfmt 6 >blastfile.out
+
+
+MaleScaff1.1000000.primers
+
+blastn -query MaleScaff1.1000000.primers -db FemaleHiC -outfmt 6 -task blastn-short
+
+blastn -query MaleScaff1.1000000.primers -db FemaleHiC -outfmt 6 -task blastn-short
+
+tar -xvf /home/runcklesslab/Taylor/Transcriptome/affinisTranscriptomes.tar.gz
+
+blastn -query affinis_transcriptome.20120529.fasta -db ../Short_Read_Mapping/FemaleHiC2 -outfmt 2 > transcriptome.blast
+
+
+
+watch tail transcriptome.blast
+
+blastn -query affinis_transcriptome.20120529.fasta -db ../Short_Read_Mapping/FemaleHiC2 -outfmt "6 std qlen" -max_target_seqs 1 > transcriptome.blast &
+
+ grep ">" affinis_transcriptome.20120529.fasta |wc -l
+
+blastn -query affinis_transcriptome.20120529.fasta -db ../Short_Read_Mapping/MaleHiC -outfmt "6 std qlen" -max_target_seqs 1 > transcriptome.blast.male &
+
+grep PGA_scaffold11__133_contigs__length_7237977 transcriptome.blast
+
+grep PGA_scaffold11__133_contigs__length_7237977 transcriptome.blast.male
+
+grep PGA_scaffold11__133_contigs__length_7237977 transcriptome.blast.male |awk '$3>99 && $4/$13>0.8'
+
+bioawk -cfastx '$name=="comp698032_c0_seq1"' affinis_transcriptome.20120529.fasta
+
+bioawk -cfastx '$name=="comp698032_c0_seq1" {print ">comp698032_c0_seq1\n" $seq}' affinis_transcriptome.20120529.fasta >comp698032_c0_seq1.fa
+
+blastn -query comp698032_c0_seq1.fa -db ../Short_Read_Mapping/FemaleHiC2 -outfmt "6 std qlen" -max_target_seqs 1
+
+bioawk -cfastx '$name=="comp29667_c0_seq1" {print ">comp29667_c0_seq1\n" $seq}' affinis_transcriptome.20120529.fasta >comp29667_c0_seq1.fa
+
+blastn -query comp29667_c0_seq1.fa -db ../Short_Read_Mapping/FemaleHiC2 -outfmt "6 std qlen" -max_target_seqs 1
+
+bioawk -cfastx '$name=="comp29667_c0_seq1" {print ">comp29667_c0_seq1\n" $seq}' affinis_transcriptome.20120529.fasta >comp29667_c0_seq1.fa
+
+blastn -query comp29667_c0_seq1.fa -db ../Short_Read_Mapping/FemaleHiC2 -outfmt "6 std qlen" -max_target_seqs 1
+
+blastn -query comp29667_c0_seq1.fa -db ../Short_Read_Mapping/MaleHiC -outfmt "6 std qlen" -max_target_seqs 1
+
+grep PGA_scaffold11__133_contigs__length_7237977 transcriptome.blast.male |awk '$3>99 && $4/$13>0.8 && $4>800'
+
+bioawk -cfastx '$name=="comp29693_c0_seq1" {print ">comp29693_c0_seq1\n" $seq}' affinis_transcriptome.20120529.fasta >comp29693_c0_seq1.fa
+
+blastn -query comp29693_c0_seq1.fa -db ../Short_Read_Mapping/MaleHiC -outfmt "6 std qlen" -max_target_seqs 1
+
+blastn -query comp29693_c0_seq1.fa -db ../Short_Read_Mapping/FemaleHiC2 -outfmt "6 std qlen" -max_target_seqs 1
+
+grep PGA_scaffold31__9_contigs__length_634783 transcriptome.blast.male
+
+ioawk -cfastx '$name=="comp29693_c0_seq1" {print ">comp29693_c0_seq1\n" $seq}' affinis_transcriptome.20120529.fasta >comp29693_c0_seq1.fa
+
+
+
+
+To develop primers:
+plug this:
+>comp29667_c0_seq1
+TTATTAAAAGTCCTAAGAATGTTTTTAATCAATTTAAAGATAATCCACAAATAGCCCCAATTAGATGATTACTTTTATTTATTGTATTTTCTATTACATTTATTTTATTTTGTTCAATTAATTATTATTCTTATATACCTTCTTCACCTAAATCTAATGAATTAAAAAATATTAATTTAAATTCAATAAATTGAAAATGATAACAAATTTATTTTCTGTATTTGACCCATCAGCAATTTTTGGATTATCTTTAAATTGATTAAGAACATTCTTAGGACTTTTAATAATTCCTTCAATTTATTGACTAATACCTTCTCGATTTAATATTTTTTGAAATTCTATTCTTCAAACTCTTCACAAAGAATTTAAAACATTATTAGGACCTTCAGGTCATAATGGTTCTACATTCATTTTTATTTCTTTATTTTCATTAATTTTATTTAATAATTTTATAGGATTATTCCCTTATATTTTTACAAGAACAAGTCATTTAACTTTAACTCTTTCATTAGCTTTACCATTATGATTATGTTTTATATTATATGGTTGAATCAATCATACACAACATATATTTGCTCATTTAGTTCCTCAAGGAACTCCAGCTATTTTAATACCATTTATAGTATGTATTGAAACTATTAGTAATGTAATTCGACCAGGAACTTTAGCTGTTCGATTAACAGCTAATATAATTGCCGGACATTTACTATTAACTCTATTAGGAAATACTGGACCTTCAATATCATATTTTTTAGTTACATTTTTATTAGTAGCTCAAATTGCTCTTTTAGTTTTAGAATCAGCTGTTGCTATAATTCAATCTTATGTATTTGCTGTTTTAAGAACTTTATATTCTAGAGAAGTAAATTAATTAATTAAAAAAAAAAAAAAAAAAAAAA
+
+into Primer3
+
