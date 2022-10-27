@@ -1,4 +1,4 @@
-# Finding Primers for Potential Ys
+﻿# Finding Primers for Potential Ys
 
 I plotted the 4 potential Ys against the female to see where they land using R
 Script:C:/Users/tdcon/Desktop/KUResearch/PutativeYtoX.R
@@ -98,10 +98,47 @@ Similar to above, we grepped out a sequence within some parameters
 `grep PGA_scaffold11__133_contigs__length_7237977 transcriptome.blast.male |awk '$3>99 && $4/$13>0.8 && $4>800'`
 
 Transcriptome segments tried in those repeated steps:
-- comp29693_c0_seq1
-- comp29667_c0_seq1
-- comp698032_c0_seq1
+ 
+| transcriptome |scaffold|
+|--|--|
+|comp29667_c0_seq1| 11 |
+| comp29693_c0_seq1 | 11 |
+| comp698032_c0_seq1 | 11 |
+| comp30262_c0_seq1| 11|
+| comp28193_c0_seq1| 31|
+| comp174474_c0_seq1| 31|
+
+Not much luck here...
 
 Started looking at scaffold 31:
 
 `grep PGA_scaffold31__9_contigs__length_634783 transcriptome.blast.male`
+
+## A different approach
+We made a table of unique hits in the male that don't exist in the female
+
+The code is as follows:
+
+    cut -f1 transcriptome.blast |sort |uniq >transcriptome.femalehits.uniq
+    cut -f1 transcriptome.blast.male |sort |uniq >transcriptome.malehits.uniq
+    while read p ; do echo -n $p " " ; grep -c $p transcriptome.femalehits.uniq ; done < transcriptome.malehits.uniq |awk '$2==0 {print $1}' >MaleOnlyTranscriptomeHits.out
+    while read p ; do grep $p transcriptome.blast.male ; done < MaleOnlyTranscriptomeHits.out |awk '{c[$2]++}END{for (i in c) printf("%s\t%s\n",i,c[i])}'
+
+
+|Scaffold |Matches |
+|--|--|
+|PGA_scaffold10__20_contigs__length_963180 |87 |
+|PGA_scaffold1__21_contigs__length_49891873 |23 |
+|PGA_scaffold11__133_contigs__length_7237977 |49 |
+|PGA_scaffold6__31_contigs__length_4556253 |1274 |
+|PGA_scaffold2__103_contigs__length_47279294 |56 |
+|PGA_scaffold33__196_contigs__length_9964445 |183 |
+|PGA_scaffold30__23_contigs__length_1144930 |29 |
+
+---
+
+|Transcript |Scaffold |Primer |Forward |Reverse |PCR amplification |
+|--|--|--|--|--|--|
+|comp1083250_c0_seq1|6|Yes|ATTCCATGATCAGGTTATTGCCATT|ATATCATCAATGTCTGTTGTTTCGC|  |
+|comp1326310_c0_seq1|11|Yes|AAGCACCGTGTACTTCTAAGCAG|GCTGAAGTTGTTGATGCTGTTG|  |
+|comp29437_c0_seq1|10|Yes|CCACACTTTCATGGTTTGTATTCAC|CATTTTCCACGTTCTAGCATTCAAG|  |
