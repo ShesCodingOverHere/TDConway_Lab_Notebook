@@ -28,3 +28,5 @@ Made a subset of our data using this code:
 
 Shell script used to align to the reference:
 /home/runcklesslab/Taylor/Short_Read_Mapping/MaleFemaleMapping.sh
+
+![](https://raw.githubusercontent.com/ShesCodingOverHere/TDConway_Lab_Notebook/master/images/AffinisNormalizedCoverageChromQuotient.png)
