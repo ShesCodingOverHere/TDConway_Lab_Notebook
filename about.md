@@ -42,7 +42,8 @@ Computational
 
 Wet lab
 - High molecular weight DNA extractions
-- 
+- PCR
+- Larval brain chromosome squashes
 
 
 ### Presentations and Awards
