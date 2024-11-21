@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-I am a PhD student at the university of Kansas(KU) doing research in the Unckless lab working with meiotic drive in Drosophila.
+I am a PhD student at the university of Kansas(KU) doing research in the Unckless lab working with sex chromosome evolution in *Drosophila*.
 
 
 
@@ -40,12 +40,14 @@ Computational
 - Profiecient in R, Java, and Python
 
 
-Other
--something goes here
+Wet lab
+- High molecular weight DNA extractions
+- 
 
 
 ### Presentations and Awards
-
+2024 **Taylor Conway**, Death throes of the Y chromosome
+University of Kansas, EEB Genetics
 
 #### Posters
 2022 **Taylor Conway**, Nick Stewart, Cathy C. Moore, Rebekah Rogers, Local Adaptation in D. yakuba and D. santomea
